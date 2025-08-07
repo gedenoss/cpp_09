@@ -53,7 +53,7 @@ int RPN::evaluate(const std::string& expression) {
 
     while (iss >> token) {
         if (isNumber(token)) {
-            // Convertir le caractère en nombre
+            // Convertir le carevaluateactère en nombre
             int num = token[0] - '0';
             _stack.push(num);
         }

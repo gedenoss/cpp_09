@@ -488,13 +488,13 @@ void PmergeMe::sort() {
 
     // Calculs théoriques pour comparaison
     long n = _vectorData.size();
+    long theoretical_ford_johnson = n * (long)(log(n) / log(2)) - n + 1;  // Légèrement optimisé
     long theoretical_mergesort = n * (long)(log(n) / log(2));  // O(n log n) pour merge sort classique
     long theoretical_quicksort = n * (long)(log(n) / log(2));  // O(n log n) moyen pour quicksort
     long theoretical_bubble = (n * (n - 1)) / 2; // O(n²) pour bubble sort
 
     std::cout << std::endl << "Theoretical complexity comparison (for n=" << n << "):" << std::endl;
-    std::cout << "  - Ford-Johnson (vector): " << (_vectorStats.comparisons + _vectorStats.movements) << " operations" << std::endl;
-    std::cout << "  - Ford-Johnson (deque): " << (_dequeStats.comparisons + _dequeStats.movements) << " operations" << std::endl;
+    std::cout << "  - Ford-Johnson (theory): ~" << theoretical_ford_johnson << " ops" << std::endl;
     std::cout << "  - Standard merge sort: ~" << theoretical_mergesort << " operations" << std::endl;
     std::cout << "  - Standard quick sort: ~" << theoretical_quicksort << " operations" << std::endl;
     std::cout << "  - Bubble sort: ~" << theoretical_bubble << " operations" << std::endl;
