@@ -29,7 +29,6 @@ bool BitcoinExchange::isValidDate(const std::string& date) {
     if (date.length() != 10 || date[4] != '-' || date[7] != '-')
         return false;
 
-    // Vérifier que tous les caractères sont des chiffres sauf les tirets
     for (int i = 0; i < 10; i++) {
         if (i == 4 || i == 7) continue;
         if (!isdigit(date[i])) return false;
@@ -55,8 +54,7 @@ bool BitcoinExchange::loadDatabase(const std::string& filename) {
     if (!file.is_open()) return false;
 
     std::string line;
-    std::getline(file, line); // Skip header
-
+    std::getline(file, line);
     while (std::getline(file, line)) {
         size_t pos = line.find(',');
         if (pos == std::string::npos) continue;
@@ -79,21 +77,17 @@ bool BitcoinExchange::init(const std::string& databaseFile) {
 }
 
 double BitcoinExchange::getRate(const std::string& date) {
-    // Utilise lower_bound pour trouver la première date >= à celle recherchée
     std::map<std::string, double>::iterator it = _database.lower_bound(date);
 
-    // Si on trouve exactement la date
     if (it != _database.end() && it->first == date) {
         return it->second;
     }
 
-    // Sinon, on prend la date précédente
     if (it != _database.begin()) {
         --it;
         return it->second;
     }
 
-    // Aucune date antérieure trouvée
     return -1;
 }
 
@@ -105,7 +99,7 @@ void BitcoinExchange::processFile(const std::string& inputFile) {
     }
 
     std::string line;
-    std::getline(file, line); // Skip header
+    std::getline(file, line);
 
     while (std::getline(file, line)) {
         size_t pos = line.find(" | ");
