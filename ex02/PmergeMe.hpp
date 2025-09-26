@@ -49,7 +49,6 @@ private:
     std::vector<int> _vectorData;
     std::deque<int> _dequeData;
 
-    // Compteurs pour les statistiques
     struct Statistics {
         long comparisons;
         long movements;
@@ -61,12 +60,10 @@ private:
     mutable Statistics _vectorStats;
     mutable Statistics _dequeStats;
 
-    // Méthodes pour std::vector
     void fordJohnsonSortVector(std::vector<int>& arr, Statistics& stats);
     void insertionSortVector(std::vector<int>& arr, int left, int right, Statistics& stats);
     void mergeVector(std::vector<int>& arr, int left, int mid, int right, Statistics& stats);
 
-    // Méthodes pour std::deque
     void fordJohnsonSortDeque(std::deque<int>& arr, Statistics& stats);
     void insertionSortDeque(std::deque<int>& arr, int left, int right, Statistics& stats);
     void mergeDeque(std::deque<int>& arr, int left, int mid, int right, Statistics& stats);
