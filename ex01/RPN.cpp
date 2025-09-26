@@ -22,7 +22,6 @@ bool RPN::isOperator(const std::string& token) {
 bool RPN::isNumber(const std::string& token) {
     if (token.empty()) return false;
 
-    // Vérifier si c'est un chiffre unique (0-9)
     if (token.length() == 1 && token[0] >= '0' && token[0] <= '9') {
         return true;
     }
@@ -43,7 +42,6 @@ int RPN::performOperation(int a, int b, char op) {
 }
 
 int RPN::evaluate(const std::string& expression) {
-    // Vider la pile au début
     while (!_stack.empty()) {
         _stack.pop();
     }
@@ -53,7 +51,6 @@ int RPN::evaluate(const std::string& expression) {
 
     while (iss >> token) {
         if (isNumber(token)) {
-            // Convertir le carevaluateactère en nombre
             int num = token[0] - '0';
             _stack.push(num);
         }
@@ -62,7 +59,6 @@ int RPN::evaluate(const std::string& expression) {
                 throw std::runtime_error("Not enough operands");
             }
 
-            // Attention à l'ordre : le dernier empilé est le deuxième opérande
             int b = _stack.top(); _stack.pop();
             int a = _stack.top(); _stack.pop();
 
