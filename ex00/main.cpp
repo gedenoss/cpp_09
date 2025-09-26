@@ -9,7 +9,6 @@ int main(int argc, char* argv[]) {
 
     BitcoinExchange exchange;
 
-    // Charger la base de données (supposée être data.csv dans le même répertoire)
     if (!exchange.init("data.csv")) {
         std::cerr << "Error: could not load database." << std::endl;
         return 1;
