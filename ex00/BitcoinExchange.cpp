@@ -34,11 +34,9 @@ bool BitcoinExchange::isValidDate(const std::string& date) {
         if (!isdigit(date[i])) return false;
     }
 
-    int year = std::atoi(date.substr(0, 4).c_str());
     int month = std::atoi(date.substr(5, 2).c_str());
     int day = std::atoi(date.substr(8, 2).c_str());
 
-    if (year < 2009 || year > 2024) return false;
     if (month < 1 || month > 12) return false;
     if (day < 1 || day > 31) return false;
 
@@ -55,6 +53,7 @@ bool BitcoinExchange::loadDatabase(const std::string& filename) {
 
     std::string line;
     std::getline(file, line);
+
     while (std::getline(file, line)) {
         size_t pos = line.find(',');
         if (pos == std::string::npos) continue;
@@ -88,7 +87,7 @@ double BitcoinExchange::getRate(const std::string& date) {
         return it->second;
     }
 
-    return -1;
+    return it->second;
 }
 
 void BitcoinExchange::processFile(const std::string& inputFile) {
@@ -115,6 +114,17 @@ void BitcoinExchange::processFile(const std::string& inputFile) {
             std::cerr << "Error: bad input => " << line << std::endl;
             continue;
         }
+        bool validNumber = !valueStr.empty();
+        for (size_t i = 0; i < valueStr.size(); ++i) {
+            if (std::isalpha(static_cast<unsigned char>(valueStr[i]))) {
+                validNumber = false;
+                break;
+            }
+        }
+        if (!validNumber) {
+            std::cerr << "Error: bad input => " << line << std::endl;
+            continue;
+        }
 
         double value = std::atof(valueStr.c_str());
 
@@ -129,10 +139,6 @@ void BitcoinExchange::processFile(const std::string& inputFile) {
         }
 
         double rate = getRate(date);
-        if (rate == -1) {
-            std::cerr << "Error: no data available for this date." << std::endl;
-            continue;
-        }
 
         std::cout << date << " => " << value << " = " << (value * rate) << std::endl;
     }
